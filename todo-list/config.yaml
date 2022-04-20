@@ -1,0 +1,17 @@
+service:
+  AppModel: debug
+  HttpPort: 8081
+
+redis:
+  RedisAddr: 127.0.0.1
+  RedisPort: 6379
+  RedisPW: jshS5MCWppGED4THvBzfBuoA
+  RedisDBName: 0
+
+Mysql:
+  DBDrive: mysql
+  DBAddr: 127.0.0.1
+  DBPort: 3306
+  DBUser: root
+  DBPW: ULrTevTgckukX2Akmxm795vp
+  DBName: test
