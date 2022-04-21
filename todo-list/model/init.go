@@ -12,10 +12,11 @@ var (
 	DB *gorm.DB
 )
 
-func InitDB(connString string) {
-	DB, err := gorm.Open("mysql", connString)
+func InitDB(connString string) (err error) {
+	DB, err = gorm.Open("mysql", connString)
 	if err != nil {
 		panic("mysql init failed;")
+		return err
 	}
 	fmt.Println("mysql init success；")
 	//默认情况下允许输出db的log
@@ -34,4 +35,8 @@ func InitDB(connString string) {
 	//标准 （实例数）*（最大并发连接数）< (mysql最大连接数)
 	DB.DB().SetMaxOpenConns(20)                  //设置最大并发连接数
 	DB.DB().SetConnMaxLifetime(time.Second * 30) //连接可重用的最大时间长度
+
+	// go结构体到表的映射
+	migration()
+	return nil
 }
