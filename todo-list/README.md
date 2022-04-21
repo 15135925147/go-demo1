@@ -1,6 +1,8 @@
 ## 练习项目--备忘录
 
-### 使用 gin  gorm 
+### 使用 gin  gorm  jwt
+
+`go get github.com/dgrijalva/jwt-go`
 
 ### 数据库 redis  mysql 
 
@@ -15,4 +17,10 @@ body参数:`{
         "user_name": "Jayson001",  
         "password": "123456" 
          }`
-        
+    
+接口：`/api/v1/user/login`   
+
+body参数:`{
+            "user_name": "Jayson003",
+            "password": "123456"
+        }` 

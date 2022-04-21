@@ -21,3 +21,17 @@ func UserRegister(c *gin.Context) {
 		c.JSON(200, res)
 	}
 }
+
+// 用户登陆
+func UserLogin(c *gin.Context) {
+	var userLogin service.UserService
+	if err := c.ShouldBind(&userLogin); err != nil { // 信息记录到 userLogin中
+		// 绑定失败
+		c.JSON(400, nil)
+		fmt.Println(err)
+	} else {
+		// 绑定成功 service执行注册 给用户返回一个标准返回
+		res := userLogin.Login()
+		c.JSON(200, res)
+	}
+}
