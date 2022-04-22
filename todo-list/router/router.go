@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/15135925147/go-demo1/todo-list/api"
+	"github.com/15135925147/go-demo1/todo-list/middleware"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
@@ -15,6 +16,12 @@ func NewRouter() *gin.Engine {
 	{
 		v1.POST("user/register", api.UserRegister)
 		v1.POST("user/login", api.UserLogin)
+		authed := v1.Group("/")
+		authed.Use(middleware.JWT()) //每次请求都需要验证
+		{
+			authed.POST("task", api.CreateTask)
+			authed.GET("task/:id", api.ShowTask)
+		}
 	}
 	return router
 }
