@@ -13,3 +13,20 @@ type TokenData struct {
 	User  interface{} `json:"user"`
 	Token string      `json:"token"`
 }
+
+type DataList struct {
+	Item  interface{} `json:"item"`
+	Total int         `json:"total"`
+}
+
+// 带总量返回
+func BuilderListResponse(item interface{}, total int) Response {
+	return Response{
+		Status: 200,
+		Data: DataList{
+			Item:  item,
+			Total: total,
+		},
+		Msg: "成功",
+	}
+}

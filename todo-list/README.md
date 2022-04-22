@@ -39,3 +39,7 @@ body参数:`{
 查看备忘录接口：Get `/api/v1/task/:id`   
 
 header参数（token）：`Authorization: ${Token}`
+
+查看所有备忘录接口：Get `/api/v1/tasks`   
+
+header参数（token）：`Authorization: ${Token}`

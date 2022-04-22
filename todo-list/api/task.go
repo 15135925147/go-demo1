@@ -17,13 +17,8 @@ func CreateTask(c *gin.Context) {
 			"err": err,
 		})
 	} else {
-		//验证token
-		claims, err := utils.ParseToken(c.GetHeader("Authorization"))
-		if err != nil {
-			c.JSON(403, gin.H{
-				"err": err,
-			})
-		}
+		//这里是为了获取到用户信息，  主要不是为了验证token因为进入这里之前中间件已经验证了token
+		claims, _ := utils.ParseToken(c.GetHeader("Authorization"))
 
 		// 绑定成功  根据user id执行创建
 		res := createTask.Create(claims.Id)
@@ -31,6 +26,7 @@ func CreateTask(c *gin.Context) {
 	}
 }
 
+//查看某一条备忘录
 func ShowTask(c *gin.Context) {
 	var showTask service.ShowTaskService
 	if err := c.ShouldBind(&showTask); err != nil {
@@ -40,9 +36,52 @@ func ShowTask(c *gin.Context) {
 			"err": err,
 		})
 	} else {
-
 		// 绑定成功  根据url id 获取到这条备忘录
 		res := showTask.Show(c.Param("id"))
 		c.JSON(200, res)
 	}
+}
+
+//获取到该用户所有的备忘录
+func ListTask(c *gin.Context) {
+	var listTask service.ListTaskService
+	if err := c.ShouldBind(&listTask); err != nil {
+		// 绑定失败
+		logging.Error(err)
+		c.JSON(400, gin.H{
+			"err": err,
+		})
+	} else {
+		//这里是为了获取到用户信息，  主要不是为了验证token因为进入这里之前中间件已经验证了token
+		claims, _ := utils.ParseToken(c.GetHeader("Authorization"))
+
+		// 绑定成功  根据user id获取到该用户所有的备忘录
+		res := listTask.List(claims.Id)
+		c.JSON(200, res)
+	}
+}
+
+//更新备忘录
+func UpdateTask(c *gin.Context) {
+	var updateTask service.UpdateTaskService
+	if err := c.ShouldBind(&updateTask); err != nil {
+		// 绑定失败
+		logging.Error(err)
+		c.JSON(400, gin.H{
+			"err": err,
+		})
+	} else {
+		// 绑定成功  根据user id执行创建
+		res := updateTask.Update(c.Param("id"))
+		c.JSON(200, res)
+	}
+}
+
+//删除备忘录
+func DeleteTask(c *gin.Context) {
+	var deleteTask service.DeleteTaskService
+	// 绑定成功  根据url穿进来id执行删除
+	res := deleteTask.Delete(c.Param("id"))
+	c.JSON(200, res)
+
 }

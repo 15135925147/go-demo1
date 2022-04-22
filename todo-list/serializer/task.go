@@ -26,3 +26,11 @@ func BuilderTask(task model.Task) Task {
 	}
 
 }
+
+func BuilderTasks(items []model.Task) (tasks []Task) {
+	for _, item := range items {
+		task := BuilderTask(item)
+		tasks = append(tasks, task)
+	}
+	return tasks
+}
